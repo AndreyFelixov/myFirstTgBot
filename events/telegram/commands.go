@@ -13,6 +13,7 @@ const (
 	RngCmd   = "/rnd"
 	HelpCmd  = "/help"
 	StartCmd = "/start"
+	DogCmd   = "/dog"
 )
 
 func (p *Processor) doCmd(text string, chatID int, username string) error {
@@ -21,9 +22,6 @@ func (p *Processor) doCmd(text string, chatID int, username string) error {
 	if isAddCmd(text) {
 
 		return p.savePage(chatID, text, username)
-
-		//TODO: AddPage
-
 	}
 	switch text {
 	case RngCmd:
@@ -35,10 +33,12 @@ func (p *Processor) doCmd(text string, chatID int, username string) error {
 	case StartCmd:
 
 		return p.sendHello(chatID)
+	case DogCmd:
+
+		return p.sendDog(chatID)
 	default:
 
 		return p.tg.SendMessage(chatID, msgUnknownCommand)
-
 	}
 }
 
@@ -97,6 +97,11 @@ func (p *Processor) sendHelp(chatID int) error {
 func (p *Processor) sendHello(chatID int) error {
 
 	return p.tg.SendMessage(chatID, msgHello)
+}
+
+func (p *Processor) sendDog(chatID int) error {
+
+	return p.tg.SendMessage(chatID, msgDogAlert)
 }
 
 func isAddCmd(text string) bool {
